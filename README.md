@@ -56,7 +56,7 @@ Training set risk: 0.0179
 Testing set risk: 0.0000
 ```
 
-![](https://raw.github.com/wiki/GRAAL-Research/MinCq/sklearn-example.png)
+![](https://github.com/GRAAL-Research/MinCq/blob/master/sklearn_example.png)
 
 
 ## References

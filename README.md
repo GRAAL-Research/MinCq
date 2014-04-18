@@ -56,8 +56,7 @@ Training set risk: 0.0179
 Testing set risk: 0.0000
 ```
 
-![](https://github.com/GRAAL-Research/MinCq/blob/master/sklearn_example.png)
-
+![](https://raw.githubusercontent.com/GRAAL-Research/MinCq/master/sklearn_example.png)
 
 ## References
 [1] François Laviolette, Mario Marchand and Jean-Francis Roy. "From PAC-Bayes Bounds to Quadratic Programs for Majority Votes". In Proceedings of the 28th International Conference on Machine Learning, 2011.

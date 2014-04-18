@@ -60,4 +60,5 @@ Testing set risk: 0.0000
 
 ## References
 [1] François Laviolette, Mario Marchand and Jean-Francis Roy. "From PAC-Bayes Bounds to Quadratic Programs for Majority Votes". In Proceedings of the 28th International Conference on Machine Learning, 2011.
+
 [2] Pascal Germain, Alexandre Lacasse, François Laviolette, Mario Marchand and Jean-Francis Roy. "Risk Bounds for the Majority Vote: From a PAC-Bayesian Analysis to a Learning Algorithm". Accepted for publication in the Journal of Machine Learning Research, 2014.

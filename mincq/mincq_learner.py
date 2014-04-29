@@ -100,6 +100,7 @@ class MinCqLearner(BaseEstimator, ClassifierMixin):
         logging.info("Number of voters: {}".format(len(voters)))
 
         self.majority_vote = MajorityVote(voters)
+        n_base_voters = len(self.majority_vote.weights)
 
         # Preparation and resolution of the quadratic program
         logging.info("Preparing QP...")
@@ -107,18 +108,17 @@ class MinCqLearner(BaseEstimator, ClassifierMixin):
 
         try:
             logging.info("Solving QP...")
-            solver_result = self.qp.solve()
-            self.majority_vote.weights = solver_result
+            solver_weights = self.qp.solve()
+
+            # Conversion of the weights of the n first voters to weights on the implicit 2n voters.
+            # See Section 7.1 of [2] for an explanation.
+            self.majority_vote.weights = np.array([2 * q - 1.0 / n_base_voters for q in solver_weights])
 
         except Exception as e:
-            self.majority_vote = None
-            raise Exception("MinCqLearner: Error while solving the quadratic program:", str(e))
 
-        # Conversion of the weights of the n first voters to weights on the implicit 2n voters.
-        # See Section 7.1 of [2] for an explanation.
-        old_weights = self.majority_vote.weights
-        n_base_voters = len(self.majority_vote.weights)
-        self.majority_vote.weights = np.array([2 * q - 1.0 / n_base_voters for q in old_weights])
+            uniform_weights = np.array([1.0 / n_base_voters] * n_base_voters)
+            logging.error("{}: Error while solving the quadratic program: {}.".format(str(self), str(e)))
+            self.majority_vote = None
 
         return self
 
@@ -137,7 +137,8 @@ class MinCqLearner(BaseEstimator, ClassifierMixin):
         """
         logging.info("Predicting...")
         if self.majority_vote is None:
-            raise Exception("MinCqLearner.predit: Classifier must be fit before predicting.")
+            logging.error("{}: Error while predicting: MinCq has not been fit or fitting has failed. Will output invalid labels".format(str(self)))
+            return np.zeros((len(X),))
 
         return self.majority_vote.vote(X)
 

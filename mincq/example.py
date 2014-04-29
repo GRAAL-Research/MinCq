@@ -28,8 +28,8 @@ from utils import print_sklearn_grid_scores
 
 
 def main():
-    # Uncomment the following to activate more verbose information.
-    #logging.basicConfig(level=logging.INFO)
+    # Change logging.ERROR to logging.INFO to activate more verbose information.
+    logging.basicConfig(level=logging.ERROR)
 
     # Three simple examples of MinCq usage.
     simple_classification_example()

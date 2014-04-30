@@ -1,5 +1,4 @@
 #-*- coding:utf-8 -*-
-__author__ = 'Jean-Francis Roy'
 """ MinCq learning algorithm
 
 Related papers:
@@ -8,6 +7,7 @@ Related papers:
 
 http://graal.ift.ulaval.ca/majorityvote/
 """
+__author__ = 'Jean-Francis Roy'
 
 import logging
 import numpy as np

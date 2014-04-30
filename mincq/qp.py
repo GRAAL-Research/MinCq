@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 """
 This module encapsulates a quadratic program (QP) and solves it using CVXOPT.
 

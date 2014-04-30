@@ -34,7 +34,7 @@ class MajorityVote(object):
 
         Returns
         -------
-        votes : ndarray, shape=(n_samples,), where each value Sis either -1 or 1
+        votes : ndarray, shape=(n_samples,), where each value is either -1 or 1
             The vote of the majority vote for each sample.
         """
         margins = self.margin(X)

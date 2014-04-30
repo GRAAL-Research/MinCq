@@ -1,6 +1,6 @@
 #-*- coding:utf-8 -*-
-__author__ = 'Jean-Francis Roy'
 """ Module containing small utilities that have nowhere else to go. """
+__author__ = 'Jean-Francis Roy'
 
 import numpy as np
 

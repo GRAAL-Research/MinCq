@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mincq.voter &mdash; MinCq 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.1.0/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="MinCq 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          MinCq</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">MinCq Learning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code.html"><tt class="docutils literal"><span class="pre">mincq</span></tt> Package</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <h1>Source code for mincq.voter</h1><div class="highlight"><pre>
+<span class="c">#-*- coding:utf-8 -*-</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;Jean-Francis Roy&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="Voter"><a class="viewcode-back" href="../../code.html#mincq.voter.Voter">[docs]</a><span class="k">class</span> <span class="nc">Voter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Base class for a voter (function X -&gt; [-1, 1]), where X is an array of samples</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Voter.vote"><a class="viewcode-back" href="../../code.html#mincq.voter.Voter.vote">[docs]</a>    <span class="k">def</span> <span class="nf">vote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the output of the voter, on a sample list X</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : ndarray, shape=(n_samples, n_features)</span>
+<span class="sd">            Input data to classify</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        votes : ndarray, shape=(n_samples,)</span>
+<span class="sd">            The result the the voter function, for each sample</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Voter.vote: Not implemented.&quot;</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="BinaryKernelVoter"><a class="viewcode-back" href="../../code.html#mincq.voter.BinaryKernelVoter">[docs]</a><span class="k">class</span> <span class="nc">BinaryKernelVoter</span><span class="p">(</span><span class="n">Voter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A Binary Kernel Voter, which outputs the value of a kernel function whose first example is fixed a priori.</span>
+<span class="sd">    The sign of the output depends on the label (-1 or 1) of the sample on which the kernel voter is based</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : ndarray, shape=(n_features,)</span>
+<span class="sd">        The base sample&#39;s description vector</span>
+
+<span class="sd">    y : int, -1 or 1</span>
+<span class="sd">        The label of the base sample. Determines if the voter thinks &quot;negative&quot; or &quot;positive&quot;</span>
+
+<span class="sd">    kernel_function : function</span>
+<span class="sd">        The kernel function takes two samples and returns a similarity value. If the kernel has parameters, they should</span>
+<span class="sd">        be set using kwargs parameter</span>
+
+<span class="sd">    kwargs : keyword arguments (optional)</span>
+<span class="sd">        Additional parameters for the kernel function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">kernel_function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">assert</span><span class="p">(</span><span class="n">y</span> <span class="ow">in</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BinaryKernelVoter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_function</span> <span class="o">=</span> <span class="n">kernel_function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+    <span class="k">def</span> <span class="nf">vote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">base_point_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">])</span>
+        <span class="n">votes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_function</span><span class="p">(</span><span class="n">base_point_array</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_kernel_kwargs</span><span class="p">)</span>
+        <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">votes</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">votes</span>
+
+</div>
+<div class="viewcode-block" id="DecisionStumpVoter"><a class="viewcode-back" href="../../code.html#mincq.voter.DecisionStumpVoter">[docs]</a><span class="k">class</span> <span class="nc">DecisionStumpVoter</span><span class="p">(</span><span class="n">Voter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generic Attribute Threshold Binary Classifier</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    attribute_index : int</span>
+<span class="sd">        The attribute to consider for the classification</span>
+
+<span class="sd">    threshold : float</span>
+<span class="sd">        The threshold value for classification rule</span>
+
+<span class="sd">    direction : int (-1 or 1)</span>
+<span class="sd">        Used to reverse classification decision</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_index</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DecisionStumpVoter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attribute_index</span> <span class="o">=</span> <span class="n">attribute_index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">direction</span>
+
+    <span class="k">def</span> <span class="nf">vote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[((</span><span class="n">point</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">attribute_index</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="VotersGenerator"><a class="viewcode-back" href="../../code.html#mincq.voter.VotersGenerator">[docs]</a><span class="k">class</span> <span class="nc">VotersGenerator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Base class to create a set of voters using training samples</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="VotersGenerator.generate"><a class="viewcode-back" href="../../code.html#mincq.voter.VotersGenerator.generate">[docs]</a>    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">self_complemented</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Generates the voters using samples.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : ndarray, shape=(n_samples, n_features)</span>
+<span class="sd">            Input data on which to base the voters</span>
+
+<span class="sd">        y : ndarray, shape=(n_samples,), optional</span>
+<span class="sd">            Input labels, usually determines the decision polarity of each voter</span>
+
+<span class="sd">        self_complemented : bool</span>
+<span class="sd">            Determines if complement voters should be generated or not</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        voters : ndarray</span>
+<span class="sd">            An array of voters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;VotersGenerator.generate: not implemented&quot;</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="StumpsVotersGenerator"><a class="viewcode-back" href="../../code.html#mincq.voter.StumpsVotersGenerator">[docs]</a><span class="k">class</span> <span class="nc">StumpsVotersGenerator</span><span class="p">(</span><span class="n">VotersGenerator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Decision Stumps Voters generator.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_stumps_per_attribute : int, (default=10)</span>
+<span class="sd">        Determines how many decision stumps will be created for each attribute.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_stumps_per_attribute</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_n_stumps_per_attribute</span> <span class="o">=</span> <span class="n">n_stumps_per_attribute</span>
+
+    <span class="k">def</span> <span class="nf">_find_extremums</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="n">mini</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">Infinity</span>
+        <span class="n">maxi</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">Infinity</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">mini</span><span class="p">:</span>
+                <span class="n">mini</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">maxi</span><span class="p">:</span>
+                <span class="n">maxi</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">mini</span><span class="p">,</span> <span class="n">maxi</span>
+
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">self_complemented</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="n">voters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_extremums</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+                <span class="n">inter</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n_stumps_per_attribute</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">inter</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="c"># If inter is zero, the attribute is useless as it has a constant value. We do not add stumps for</span>
+                    <span class="c"># this attribute.</span>
+                    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n_stumps_per_attribute</span><span class="p">):</span>
+                        <span class="n">voters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DecisionStumpVoter</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">inter</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+
+                        <span class="k">if</span> <span class="n">self_complemented</span><span class="p">:</span>
+                            <span class="n">voters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DecisionStumpVoter</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">inter</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">voters</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="KernelVotersGenerator"><a class="viewcode-back" href="../../code.html#mincq.voter.KernelVotersGenerator">[docs]</a><span class="k">class</span> <span class="nc">KernelVotersGenerator</span><span class="p">(</span><span class="n">VotersGenerator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Utility function to create binary kernel voters for each (x, y) sample.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    kernel_function : function</span>
+<span class="sd">        The kernel function takes two samples and returns a similarity value. If the kernel has parameters, they should</span>
+<span class="sd">        be set using kwargs parameter</span>
+
+<span class="sd">    kwargs : keyword arguments (optional)</span>
+<span class="sd">        Additional parameters for the kernel function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kernel_function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_function</span> <span class="o">=</span> <span class="n">kernel_function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">self_complemented</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">voters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">point</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+            <span class="n">voters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BinaryKernelVoter</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_function</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_kernel_kwargs</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">self_complemented</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">point</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+                <span class="n">voters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BinaryKernelVoter</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_function</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_kernel_kwargs</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">voters</span><span class="p">)</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Jean-Francis Roy.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

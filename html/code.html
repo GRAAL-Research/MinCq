@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mincq Package &mdash; MinCq 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.1.0/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="MinCq 1.0 documentation" href="index.html" />
+    <link rel="prev" title="MinCq Learning Algorithm" href="usage.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          MinCq</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">MinCq Learning Algorithm</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""><tt class="docutils literal"><span class="pre">mincq</span></tt> Package</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">mincq</span></tt> Package</a><ul>
+<li><a class="reference internal" href="#module-mincq.mincq_learner"><tt class="docutils literal"><span class="pre">mincq_learner</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-mincq.majority_vote"><tt class="docutils literal"><span class="pre">majority_vote</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-mincq.voter"><tt class="docutils literal"><span class="pre">voters</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="usage.html" title="Previous Chapter: MinCq Learning Algorithm"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm">&laquo; MinCq Learning A...</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/code.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="mincq-package">
+<h1><tt class="xref py py-mod docutils literal"><span class="pre">mincq</span></tt> Package<a class="headerlink" href="#mincq-package" title="Permalink to this headline">¶</a></h1>
+<p>This documentation was automatically generated using the source code&#8217;s included docstrings.</p>
+<div class="section" id="module-mincq.mincq_learner">
+<span id="mincq-learner-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">mincq_learner</span></tt> Module<a class="headerlink" href="#module-mincq.mincq_learner" title="Permalink to this headline">¶</a></h2>
+<p>MinCq learning algorithm</p>
+<p>Related papers:
+[1] From PAC-Bayes Bounds to Quadratic Programs for Majority Votes (Laviolette et al., 2011)
+[2] Risk Bounds for the Majority Vote: From a PAC-Bayesian Analysis to a Learning Algorithm (Germain et al., 2014)</p>
+<p><a class="reference external" href="http://graal.ift.ulaval.ca/majorityvote/">http://graal.ift.ulaval.ca/majorityvote/</a></p>
+<dl class="class">
+<dt id="mincq.mincq_learner.MinCqLearner">
+<em class="property">class </em><tt class="descclassname">mincq.mincq_learner.</tt><tt class="descname">MinCqLearner</tt><big>(</big><em>mu</em>, <em>voters_type</em>, <em>n_stumps_per_attribute=10</em>, <em>kernel='rbf'</em>, <em>degree=3</em>, <em>gamma=0.0</em><big>)</big><a class="reference internal" href="_modules/mincq/mincq_learner.html#MinCqLearner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.mincq_learner.MinCqLearner" title="Permalink to this definition">¶</a></dt>
+<dd><p>MinCq algorithm learner. See [1, 2]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>mu</strong> : float</p>
+<blockquote>
+<div><p>The fixed value of the first moment of the margin.</p>
+</div></blockquote>
+<p><strong>voters_type</strong> : string, optional (default=&#8217;kernel&#8217;)</p>
+<blockquote>
+<div><p>Specifies the type of voters.
+It must be one of &#8216;kernel&#8217;, &#8216;stumps&#8217;.</p>
+</div></blockquote>
+<p><strong>n_stumps_per_attribute</strong> : int, optional (default=10)</p>
+<blockquote>
+<div><p>Specifies the amount of decision stumps per attribute.
+It is only significant with &#8216;stumps&#8217; voters_type.</p>
+</div></blockquote>
+<p><strong>kernel</strong> : string, optional (default=&#8217;rbf&#8217;)</p>
+<blockquote>
+<div><p>Specifies the kernel type to be used in the algorithm.
+It must be one of &#8216;linear&#8217;, &#8216;poly&#8217;, &#8216;rbf&#8217;.</p>
+</div></blockquote>
+<p><strong>degree</strong> : int, optional (default=3)</p>
+<blockquote>
+<div><p>Degree of the polynomial kernel function (&#8216;poly&#8217;).
+Ignored by all other kernels.</p>
+</div></blockquote>
+<p><strong>gamma</strong> : float, optional (default=0.0)</p>
+<blockquote class="last">
+<div><p>Kernel coefficient for &#8216;rbf&#8217; and &#8216;poly&#8217;.
+If gamma is 0.0 then 1/n_features will be used instead.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<dl class="method">
+<dt id="mincq.mincq_learner.MinCqLearner.fit">
+<tt class="descname">fit</tt><big>(</big><em>X</em>, <em>y</em><big>)</big><a class="reference internal" href="_modules/mincq/mincq_learner.html#MinCqLearner.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.mincq_learner.MinCqLearner.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Learn a majority vote weights using MinCq.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape=(n_samples, n_features)</p>
+<blockquote>
+<div><p>Training data</p>
+</div></blockquote>
+<p><strong>y</strong> : ndarray, shape=(n_samples,), optional</p>
+<blockquote class="last">
+<div><p>Training labels</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mincq.mincq_learner.MinCqLearner.predict">
+<tt class="descname">predict</tt><big>(</big><em>X</em><big>)</big><a class="reference internal" href="_modules/mincq/mincq_learner.html#MinCqLearner.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.mincq_learner.MinCqLearner.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Using previously learned majority vote weights, predict the labels of new data points.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape=(n_samples, n_features)</p>
+<blockquote>
+<div><p>Samples to predict</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>predictions</strong> : ndarray, shape=(n_samples,)</p>
+<blockquote class="last">
+<div><p>The predicted labels</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mincq.mincq_learner.MinCqLearner.predict_proba">
+<tt class="descname">predict_proba</tt><big>(</big><em>X</em><big>)</big><a class="reference internal" href="_modules/mincq/mincq_learner.html#MinCqLearner.predict_proba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.mincq_learner.MinCqLearner.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd><p>Using previously learned majority vote weights, predict the labels of new data points with a confidence
+level. The confidence level is the margin of the majority vote.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape=(n_samples, n_features)</p>
+<blockquote>
+<div><p>Samples to predict</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>predictions</strong> : ndarray, shape=(n_samples,)</p>
+<blockquote class="last">
+<div><p>The predicted labels</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mincq.majority_vote">
+<span id="majority-vote-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">majority_vote</span></tt> Module<a class="headerlink" href="#module-mincq.majority_vote" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mincq.majority_vote.MajorityVote">
+<em class="property">class </em><tt class="descclassname">mincq.majority_vote.</tt><tt class="descname">MajorityVote</tt><big>(</big><em>voters</em>, <em>weights=None</em><big>)</big><a class="reference internal" href="_modules/mincq/majority_vote.html#MajorityVote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.majority_vote.MajorityVote" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Majority Vote of real-valued functions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>voters</strong> : ndarray of Voter instances</p>
+<blockquote>
+<div><p>The voters of the majority vote. Each voter must take an example as an input, and output a real value in [-1,1].</p>
+</div></blockquote>
+<p><strong>weights</strong> : ndarray, optional (default: uniform distribution)</p>
+<blockquote class="last">
+<div><p>The weights associated to each voter.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<p class="rubric">Methods</p>
+<dl class="method">
+<dt id="mincq.majority_vote.MajorityVote.classification_matrix">
+<tt class="descname">classification_matrix</tt><big>(</big><em>X</em><big>)</big><a class="reference internal" href="_modules/mincq/majority_vote.html#MajorityVote.classification_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.majority_vote.MajorityVote.classification_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the classification matrix of the majority vote.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape=(n_samples, n_features)</p>
+<blockquote>
+<div><p>Input data to classify</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>classification_matrix</strong> : ndrray, shape=(n_samples, n_voters)</p>
+<blockquote class="last">
+<div><p>A matrix that contains the value output by each voter, for each sample.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mincq.majority_vote.MajorityVote.margin">
+<tt class="descname">margin</tt><big>(</big><em>X</em><big>)</big><a class="reference internal" href="_modules/mincq/majority_vote.html#MajorityVote.margin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.majority_vote.MajorityVote.margin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the margin of the Majority Vote on a list of samples.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape=(n_samples, n_features)</p>
+<blockquote>
+<div><p>Input data to classify.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>margins</strong> : ndarray, shape=(n_samples,), where each value Sis either -1 or 1</p>
+<blockquote class="last">
+<div><p>The margin of the majority vote for each sample.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mincq.majority_vote.MajorityVote.vote">
+<tt class="descname">vote</tt><big>(</big><em>X</em><big>)</big><a class="reference internal" href="_modules/mincq/majority_vote.html#MajorityVote.vote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.majority_vote.MajorityVote.vote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the vote of the Majority Vote on a list of samples.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape=(n_samples, n_features)</p>
+<blockquote>
+<div><p>Input data to classify.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>votes</strong> : ndarray, shape=(n_samples,), where each value is either -1 or 1</p>
+<blockquote class="last">
+<div><p>The vote of the majority vote for each sample.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mincq.voter">
+<span id="voters-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">voters</span></tt> Module<a class="headerlink" href="#module-mincq.voter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mincq.voter.BinaryKernelVoter">
+<em class="property">class </em><tt class="descclassname">mincq.voter.</tt><tt class="descname">BinaryKernelVoter</tt><big>(</big><em>x</em>, <em>y</em>, <em>kernel_function</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/mincq/voter.html#BinaryKernelVoter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.voter.BinaryKernelVoter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Binary Kernel Voter, which outputs the value of a kernel function whose first example is fixed a priori.
+The sign of the output depends on the label (-1 or 1) of the sample on which the kernel voter is based</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>x</strong> : ndarray, shape=(n_features,)</p>
+<blockquote>
+<div><p>The base sample&#8217;s description vector</p>
+</div></blockquote>
+<p><strong>y</strong> : int, -1 or 1</p>
+<blockquote>
+<div><p>The label of the base sample. Determines if the voter thinks &#8220;negative&#8221; or &#8220;positive&#8221;</p>
+</div></blockquote>
+<p><strong>kernel_function</strong> : function</p>
+<blockquote>
+<div><p>The kernel function takes two samples and returns a similarity value. If the kernel has parameters, they should
+be set using kwargs parameter</p>
+</div></blockquote>
+<p><strong>kwargs</strong> : keyword arguments (optional)</p>
+<blockquote class="last">
+<div><p>Additional parameters for the kernel function</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="mincq.voter.DecisionStumpVoter">
+<em class="property">class </em><tt class="descclassname">mincq.voter.</tt><tt class="descname">DecisionStumpVoter</tt><big>(</big><em>attribute_index</em>, <em>threshold</em>, <em>direction=1</em><big>)</big><a class="reference internal" href="_modules/mincq/voter.html#DecisionStumpVoter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.voter.DecisionStumpVoter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic Attribute Threshold Binary Classifier</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>attribute_index</strong> : int</p>
+<blockquote>
+<div><p>The attribute to consider for the classification</p>
+</div></blockquote>
+<p><strong>threshold</strong> : float</p>
+<blockquote>
+<div><p>The threshold value for classification rule</p>
+</div></blockquote>
+<p><strong>direction</strong> : int (-1 or 1)</p>
+<blockquote class="last">
+<div><p>Used to reverse classification decision</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="mincq.voter.KernelVotersGenerator">
+<em class="property">class </em><tt class="descclassname">mincq.voter.</tt><tt class="descname">KernelVotersGenerator</tt><big>(</big><em>kernel_function</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/mincq/voter.html#KernelVotersGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.voter.KernelVotersGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function to create binary kernel voters for each (x, y) sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>kernel_function</strong> : function</p>
+<blockquote>
+<div><p>The kernel function takes two samples and returns a similarity value. If the kernel has parameters, they should
+be set using kwargs parameter</p>
+</div></blockquote>
+<p><strong>kwargs</strong> : keyword arguments (optional)</p>
+<blockquote class="last">
+<div><p>Additional parameters for the kernel function</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="mincq.voter.StumpsVotersGenerator">
+<em class="property">class </em><tt class="descclassname">mincq.voter.</tt><tt class="descname">StumpsVotersGenerator</tt><big>(</big><em>n_stumps_per_attribute=10</em><big>)</big><a class="reference internal" href="_modules/mincq/voter.html#StumpsVotersGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.voter.StumpsVotersGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decision Stumps Voters generator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n_stumps_per_attribute</strong> : int, (default=10)</p>
+<blockquote class="last">
+<div><p>Determines how many decision stumps will be created for each attribute.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="mincq.voter.Voter">
+<em class="property">class </em><tt class="descclassname">mincq.voter.</tt><tt class="descname">Voter</tt><a class="reference internal" href="_modules/mincq/voter.html#Voter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.voter.Voter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for a voter (function X -&gt; [-1, 1]), where X is an array of samples</p>
+<p class="rubric">Methods</p>
+<dl class="method">
+<dt id="mincq.voter.Voter.vote">
+<tt class="descname">vote</tt><big>(</big><em>X</em><big>)</big><a class="reference internal" href="_modules/mincq/voter.html#Voter.vote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.voter.Voter.vote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the output of the voter, on a sample list X</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape=(n_samples, n_features)</p>
+<blockquote>
+<div><p>Input data to classify</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>votes</strong> : ndarray, shape=(n_samples,)</p>
+<blockquote class="last">
+<div><p>The result the the voter function, for each sample</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="mincq.voter.VotersGenerator">
+<em class="property">class </em><tt class="descclassname">mincq.voter.</tt><tt class="descname">VotersGenerator</tt><a class="reference internal" href="_modules/mincq/voter.html#VotersGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.voter.VotersGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class to create a set of voters using training samples</p>
+<p class="rubric">Methods</p>
+<dl class="method">
+<dt id="mincq.voter.VotersGenerator.generate">
+<tt class="descname">generate</tt><big>(</big><em>X</em>, <em>y=None</em>, <em>self_complemented=False</em><big>)</big><a class="reference internal" href="_modules/mincq/voter.html#VotersGenerator.generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mincq.voter.VotersGenerator.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the voters using samples.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : ndarray, shape=(n_samples, n_features)</p>
+<blockquote>
+<div><p>Input data on which to base the voters</p>
+</div></blockquote>
+<p><strong>y</strong> : ndarray, shape=(n_samples,), optional</p>
+<blockquote>
+<div><p>Input labels, usually determines the decision polarity of each voter</p>
+</div></blockquote>
+<p><strong>self_complemented</strong> : bool</p>
+<blockquote>
+<div><p>Determines if complement voters should be generated or not</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>voters</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>An array of voters</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Jean-Francis Roy.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

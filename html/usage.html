@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MinCq Learning Algorithm &mdash; MinCq 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.1.0/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="MinCq 1.0 documentation" href="index.html" />
+    <link rel="next" title="mincq Package" href="code.html" />
+    <link rel="prev" title="Welcome to MinCq’s documentation!" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          MinCq</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">MinCq Learning Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html"><tt class="docutils literal"><span class="pre">mincq</span></tt> Package</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">MinCq Learning Algorithm</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#scikit-learn-example-output">Scikit-Learn Example Output</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="index.html" title="Previous Chapter: Welcome to MinCq’s documentation!"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm">&laquo; Welcome to MinCq...</span>
+    </a>
+  </li>
+  <li>
+    <a href="code.html" title="Next Chapter: mincq Package"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm">mincq Package &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/usage.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="mincq-learning-algorithm">
+<h1>MinCq Learning Algorithm<a class="headerlink" href="#mincq-learning-algorithm" title="Permalink to this headline">¶</a></h1>
+<p>This is a simple implementation of MinCq, a learning algorithm inspired by the PAC-Bayesian theory.</p>
+<p>MinCq was first introduced in <a class="footnote-reference" href="#id3" id="id1">[1]</a>, but an upcoming journal paper will present an extensive and complete analysis
+of majority votes, PAC-Bayesian theory for inductive binary classification, and the resulting algorithm (MinCq) with
+much more experiments and information <a class="footnote-reference" href="#id4" id="id2">[2]</a>.</p>
+<p>This implementation is compatible with <a class="reference external" href="http://scikit-learn.org">Scikit-Learn</a>, and comes with usage examples, one of
+which is based on <a class="reference external" href="http://scikit-learn.org/stable/auto_examples/plot_classifier_comparison.html">this Scikit-Learn example</a>.</p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>This Python code depends on Scikit-Learn. One example depends on Matplotlib.</p>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-None"><div class="highlight"><pre>$ python3 example.py
+
+StumpsMinCq
+-----------
+Training set risk: 0.0357
+Testing set risk: 0.0000
+
+
+LinearMinCq
+-----------
+Training set risk: 0.2768
+Testing set risk: 0.2368
+
+
+PolyMinCq
+-----------
+Training set risk: 0.0625
+Testing set risk: 0.0263
+
+
+RbfMinCq
+--------
+Training set risk: 0.0089
+Testing set risk: 0.0000
+
++--------------------------------------------+
+|              RbfMinCq on Iris              |
++-----------------+--------+--------+--------+
+|mu            -&gt; |  0.0001|  0.0010|  0.0100|
+|gamma            |        |        |        |
+|           0.0   |  0.0357|  0.0357|  0.0357|
+|           0.1   |  0.0536|  0.0357|  0.0536|
+|           1.0   |  0.0536|  0.0536|  0.0536|
+|          10.0   |  0.0536|  0.0536|  0.0536|
++-----------------+--------+--------+--------+
+
+Best parameters: {&#39;gamma&#39;: 0.0, &#39;mu&#39;: 0.0001}
+Training set risk: 0.0179
+Testing set risk: 0.0000
+</pre></div>
+</div>
+</div>
+<div class="section" id="scikit-learn-example-output">
+<h2>Scikit-Learn Example Output<a class="headerlink" href="#scikit-learn-example-output" title="Permalink to this headline">¶</a></h2>
+<img alt="_images/sklearn_example.png" src="_images/sklearn_example.png" />
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>François Laviolette, Mario Marchand and Jean-Francis Roy. &#8220;From PAC-Bayes Bounds to Quadratic Programs for Majority Votes&#8221;. In Proceedings of the 28th International Conference on Machine Learning, 2011.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Pascal Germain, Alexandre Lacasse, François Laviolette, Mario Marchand and Jean-Francis Roy. &#8220;Risk Bounds for the Majority Vote: From a PAC-Bayesian Analysis to a Learning Algorithm&#8221;. Accepted for publication in the Journal of Machine Learning Research, 2014.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Jean-Francis Roy.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

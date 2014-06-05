@@ -2,8 +2,13 @@
 """MinCq learning algorithm usage examples
 
 Related papers:
-[1] From PAC-Bayes Bounds to Quadratic Programs for Majority Votes (Laviolette et al., 2011)
-[2] Risk Bounds for the Majority Vote: From a PAC-Bayesian Analysis to a Learning Algorithm (Germain et al., 2014)
+
+[1] F. Laviolette, M. Marchand, J.-F. Roy, "From PAC-Bayes Bounds to Quadratic Programs for Majority Votes",
+    In Proceedings of the 28th International Conference on Machine Learning, Bellevue, WA, USA, June 2011.
+
+[2] P. Germain, A. Lacasse, F. Laviolette, M. Marchand, J.-F. Roy, "Risk Bounds for the Majority Vote: From a
+    PAC-Bayesian Analysis to a Learning Algorithm", accepted for publication in the Journal of Machine Learning
+    Research.
 
 http://graal.ift.ulaval.ca/majorityvote/
 """
@@ -21,26 +26,28 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.datasets import make_moons, make_circles, make_classification
 from sklearn.svm import SVC
 from sklearn.ensemble import AdaBoostClassifier
+from sklearn.metrics.pairwise import rbf_kernel, linear_kernel, polynomial_kernel
 from matplotlib.colors import ListedColormap
 
-from mincq_learner import MinCqLearner
 from utils import print_sklearn_grid_scores
+import voter
 
 
 def main():
     # Change logging.ERROR to logging.INFO to activate more verbose information.
-    logging.basicConfig(level=logging.ERROR)
+    logging.basicConfig(level=logging.INFO)
 
-    # Three simple examples of MinCq usage.
+    # Four simple examples of MinCq usage.
     simple_classification_example()
+    multi_voters_example()
     cross_validation_example()
     scikit_learn_classifier_comparison_example()
 
 
 def simple_classification_example():
-    """ Simple example : with fixed hyperparameters, run four verions of MinCq on a single dataset.
+    """ Simple example : with fixed hyperparameters, run four versions of MinCq on a single dataset.
     """
-    # MinCq parameters, fixed to a given value as this is a simple exemple.
+    # MinCq parameters, fixed to a given value as this is a simple example.
     mu = 0.001
 
     # We load iris dataset, We convert the labels to be -1 or 1, and we split it in two parts: train and test.
@@ -51,7 +58,7 @@ def simple_classification_example():
 
     # We train MinCq using decision stumps as voters, on the training set.
     learner = MinCqLearner(mu, voters_type='stumps')
-    learner.fit(dataset.data, dataset.target)
+    learner.fit(X_train, y_train)
 
     # We predict the train and test labels and print the risk.
     predictions_train = learner.predict(X_train)
@@ -64,7 +71,7 @@ def simple_classification_example():
 
     # We do the same again, now with a linear kernel.
     learner = MinCqLearner(mu, voters_type='kernel', kernel='linear')
-    learner.fit(dataset.data, dataset.target)
+    learner.fit(X_train, y_train)
 
     predictions_train = learner.predict(X_train)
     predictions_test = learner.predict(X_test)
@@ -76,7 +83,7 @@ def simple_classification_example():
 
     # We do the same again, now with a polynomial kernel.
     learner = MinCqLearner(mu, voters_type='kernel', kernel='poly')
-    learner.fit(dataset.data, dataset.target)
+    learner.fit(X_train, y_train)
 
     predictions_train = learner.predict(X_train)
     predictions_test = learner.predict(X_test)
@@ -88,13 +95,54 @@ def simple_classification_example():
 
     # We do the same again, now with an RBF kernel.
     learner = MinCqLearner(mu, voters_type='kernel', kernel='rbf', gamma=0.0)
-    learner.fit(dataset.data, dataset.target)
+    learner.fit(X_train, y_train)
 
     predictions_train = learner.predict(X_train)
     predictions_test = learner.predict(X_test)
 
     print("\nRbfMinCq")
     print("--------")
+    print("Training set risk: {:.4f}".format(zero_one_loss(y_train, predictions_train)))
+    print("Testing set risk: {:.4f}\n".format(zero_one_loss(y_test, predictions_test)))
+
+
+def multi_voters_example():
+    """ Example of using a combination of many types of voters, which may be seen as multi-kernel learning (MKL).
+
+    This particular dataset is easy to solve and combining voters degrades performance. However, it might be a good
+    idea for a more complex dataset.
+    """
+    # MinCq parameters, fixed to a given value as this is a simple example.
+    mu = 0.001
+
+    # We load iris dataset, We convert the labels to be -1 or 1, and we split it in two parts: train and test.
+    dataset = load_iris()
+    dataset.target[dataset.target == 0] = -1
+    dataset.target[dataset.target == 2] = -1
+    X_train, X_test, y_train, y_test = train_test_split(dataset.data, dataset.target, random_state=42)
+
+    # We create a set of voters of different kind.
+    voters = voter.StumpsVotersGenerator(10).generate(X_train)
+    voters = np.append(voters, voter.KernelVotersGenerator(rbf_kernel, gamma=0.01).generate(X_train))
+    voters = np.append(voters, voter.KernelVotersGenerator(rbf_kernel, gamma=0.1).generate(X_train))
+    voters = np.append(voters, voter.KernelVotersGenerator(rbf_kernel, gamma=1).generate(X_train))
+    voters = np.append(voters, voter.KernelVotersGenerator(rbf_kernel, gamma=10).generate(X_train))
+    voters = np.append(voters, voter.KernelVotersGenerator(rbf_kernel, gamma=100).generate(X_train))
+    voters = np.append(voters, voter.KernelVotersGenerator(polynomial_kernel, degree=2).generate(X_train))
+    voters = np.append(voters, voter.KernelVotersGenerator(polynomial_kernel, degree=3).generate(X_train))
+    voters = np.append(voters, voter.KernelVotersGenerator(linear_kernel).generate(X_train))
+
+    # We train MinCq using these voters, on the training set.
+    learner = MinCqLearner(mu, voters_type='manual')
+    learner.voters = voters
+    learner.fit(X_train, y_train)
+
+    # We predict the train and test labels and print the risk.
+    predictions_train = learner.predict(X_train)
+    predictions_test = learner.predict(X_test)
+
+    print("\nMultiVotersMinCq")
+    print("-----------")
     print("Training set risk: {:.4f}".format(zero_one_loss(y_train, predictions_train)))
     print("Testing set risk: {:.4f}\n".format(zero_one_loss(y_test, predictions_test)))
 
@@ -171,7 +219,7 @@ def scikit_learn_classifier_comparison_example():
     for ds in datasets:
         # preprocess dataset, split into training and test part
         X, y = ds
-        y[y==0] = -1
+        y[y == 0] = -1
         X = StandardScaler().fit_transform(X)
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.4)
 

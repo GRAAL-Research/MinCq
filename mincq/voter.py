@@ -172,7 +172,7 @@ class KernelVotersGenerator(VotersGenerator):
 
     def generate(self, X, y=None, self_complemented=False):
         if y is None:
-            y = 1
+            y = np.array([1] * len(X))
 
         voters = []
         for point, label in zip(X, y):

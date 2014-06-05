@@ -48,9 +48,9 @@ def print_sklearn_grid_scores(dataset_name, algorithm_name, param_grid, grid_sco
             mean_risks[np.where(y_param_values == score.parameters[y_param_name])[0][0]][np.where(x_param_values == score.parameters[x_param_name])[0][0]] = 1 - score.mean_validation_score
 
 
-    print(u"\u250c" + "-"*(17 + 9*n_x_param_values) + u"\u2510")
+    print("+" + "-"*(17 + 9*n_x_param_values) + "+")
     print(("|{:^" + str(17 + 9*n_x_param_values) + "}|").format("%s on %s" % (algorithm_name, dataset_name)))
-    print(u"\u251c" + "-"*(17 + 9*n_x_param_values) + u"\u2524")
+    print("+" + "-"*17 + ("+" + "-"*8) * n_x_param_values + "+")
     print(("|{:14}-> |" + "{:8.4f}|"*n_x_param_values).format(x_param_name, *x_param_values))
 
     if n_params == 1:
@@ -59,5 +59,5 @@ def print_sklearn_grid_scores(dataset_name, algorithm_name, param_grid, grid_sco
         print(("|{:14}   |" + "{:8}|"*n_x_param_values).format(y_param_name, *[""]*n_x_param_values))
         for i in range(n_y_param_values):
             print(("|{:14}   |" + "{:8.4f}|"*n_x_param_values).format(y_param_values[i], *mean_risks[i]))
-    print(u"\u2514" + "-"*(17 + 9*n_x_param_values) + u"\u2518")
+    print("+" + "-"*17 + ("+" + "-"*8) * n_x_param_values + "+")
     print("")

@@ -46,11 +46,11 @@ class MajorityVote(object):
         Parameters
         ----------
         X : ndarray, shape=(n_samples, n_features)
-            Input data to classify.
+            Input data on which to calculate the margin.
 
         Returns
         -------
-        margins : ndarray, shape=(n_samples,), where each value Sis either -1 or 1
+        margins : ndarray, shape=(n_samples,), where each value is either -1 or 1
             The margin of the majority vote for each sample.
         """
         classification_matrix = self.classification_matrix(X)
@@ -67,7 +67,7 @@ class MajorityVote(object):
 
         Returns
         -------
-        classification_matrix : ndrray, shape=(n_samples, n_voters)
+        classification_matrix : ndrray, shape=(n_voters, n_samples)
             A matrix that contains the value output by each voter, for each sample.
 
         """

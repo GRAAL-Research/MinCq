@@ -30,7 +30,8 @@ class MinCqLearner(BaseEstimator, ClassifierMixin):
 
     voters_type : string, optional (default='kernel')
         Specifies the type of voters.
-        It must be one of 'kernel', 'stumps'.
+        It must be one of 'kernel', 'stumps' or 'manual'. If 'manual' is specified, the voters have to be manually set
+        using the "voters" parameter of the fit function.
 
     n_stumps_per_attribute : int, optional (default=10)
         Specifies the amount of decision stumps per attribute.
@@ -60,7 +61,7 @@ class MinCqLearner(BaseEstimator, ClassifierMixin):
         self.majority_vote = None
         self.qp = None
 
-    def fit(self, X, y):
+    def fit(self, X, y, voters=None):
         """ Learn a majority vote weights using MinCq.
 
         Parameters
@@ -70,30 +71,41 @@ class MinCqLearner(BaseEstimator, ClassifierMixin):
 
         y : ndarray, shape=(n_samples,), optional
             Training labels
+
+        voters : shape=(n_voters,), optional
+            A priori generated voters
         """
         # Preparation of the majority vote, using a voter generator that depends on class attributes
-        voters_generator = None
 
-        assert self.voters_type in ['stumps', 'kernel'], "MinCqLearner: voters_type must be 'stumps' or 'kernel'"
-        if self.voters_type == 'stumps':
-            assert self.n_stumps_per_attribute > 1, 'MinCqLearner: n_stumps_per_attribute must be positive'
-            voters_generator = StumpsVotersGenerator(self.n_stumps_per_attribute)
+        assert self.voters_type in ['stumps', 'kernel', 'manual'], "MinCqLearner: voters_type must be 'stumps', 'kernel' or 'manual'"
 
-        elif self.voters_type == 'kernel':
-            assert self.kernel in ['linear', 'poly', 'rbf'], "MinCqLearner: kernel must be 'linear', 'poly' or 'rbf'"
+        if self.voters_type == 'manual':
+            if voters is None:
+                logging.error("Manually set voters is True, but no voters have been set.")
+                return self
 
-            gamma = self.gamma
-            if gamma == 0.0:
-                gamma = 1.0 / np.shape(X)[1]
+        else:
+            voters_generator = None
 
-            if self.kernel == 'linear':
-                voters_generator = KernelVotersGenerator(linear_kernel)
-            elif self.kernel == 'poly':
-                voters_generator = KernelVotersGenerator(polynomial_kernel, degree=self.degree, gamma=gamma)
-            elif self.kernel == 'rbf':
-                voters_generator = KernelVotersGenerator(rbf_kernel, gamma=gamma)
+            if self.voters_type == 'stumps':
+                assert self.n_stumps_per_attribute > 1, 'MinCqLearner: n_stumps_per_attribute must be positive'
+                voters_generator = StumpsVotersGenerator(self.n_stumps_per_attribute)
 
-        voters = voters_generator.generate(X, y)
+            elif self.voters_type == 'kernel':
+                assert self.kernel in ['linear', 'poly', 'rbf'], "MinCqLearner: kernel must be 'linear', 'poly' or 'rbf'"
+
+                gamma = self.gamma
+                if gamma == 0.0:
+                    gamma = 1.0 / np.shape(X)[1]
+
+                if self.kernel == 'linear':
+                    voters_generator = KernelVotersGenerator(linear_kernel)
+                elif self.kernel == 'poly':
+                    voters_generator = KernelVotersGenerator(polynomial_kernel, degree=self.degree, gamma=gamma)
+                elif self.kernel == 'rbf':
+                    voters_generator = KernelVotersGenerator(rbf_kernel, gamma=gamma)
+
+            voters = voters_generator.generate(X, y)
 
         logging.info("MinCq training started...")
         logging.info("Training dataset shape: {}".format(str(np.shape(X))))
@@ -113,10 +125,9 @@ class MinCqLearner(BaseEstimator, ClassifierMixin):
             # Conversion of the weights of the n first voters to weights on the implicit 2n voters.
             # See Section 7.1 of [2] for an explanation.
             self.majority_vote.weights = np.array([2 * q - 1.0 / n_base_voters for q in solver_weights])
+            logging.info("First moment of the margin on the training set: {}".format(np.mean(y * self.majority_vote.margin(X))))
 
         except Exception as e:
-
-            uniform_weights = np.array([1.0 / n_base_voters] * n_base_voters)
             logging.error("{}: Error while solving the quadratic program: {}.".format(str(self), str(e)))
             self.majority_vote = None
 

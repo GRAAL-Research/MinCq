@@ -125,7 +125,7 @@ class MinCqLearner(BaseEstimator, ClassifierMixin):
             # Conversion of the weights of the n first voters to weights on the implicit 2n voters.
             # See Section 7.1 of [2] for an explanation.
             self.majority_vote.weights = np.array([2 * q - 1.0 / n_base_voters for q in solver_weights])
-            logging.info("First moment of the margin on the training set: {}".format(np.mean(y * self.majority_vote.margin(X))))
+            logging.info("First moment of the margin on the training set: {:.4f}".format(np.mean(y * self.majority_vote.margin(X))))
 
         except Exception as e:
             logging.error("{}: Error while solving the quadratic program: {}.".format(str(self), str(e)))

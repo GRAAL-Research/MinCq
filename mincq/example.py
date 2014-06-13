@@ -30,12 +30,13 @@ from sklearn.metrics.pairwise import rbf_kernel, linear_kernel, polynomial_kerne
 from matplotlib.colors import ListedColormap
 
 from utils import print_sklearn_grid_scores
+from mincq_learner import MinCqLearner
 import voter
 
 
 def main():
     # Change logging.ERROR to logging.INFO to activate more verbose information.
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.ERROR)
 
     # Four simple examples of MinCq usage.
     simple_classification_example()
@@ -110,7 +111,7 @@ def multi_voters_example():
     """ Example of using a combination of many types of voters, which may be seen as multi-kernel learning (MKL).
 
     This particular dataset is easy to solve and combining voters degrades performance. However, it might be a good
-    idea for a more complex dataset.
+    idea for more complex datasets.
     """
     # MinCq parameters, fixed to a given value as this is a simple example.
     mu = 0.001
@@ -122,8 +123,7 @@ def multi_voters_example():
     X_train, X_test, y_train, y_test = train_test_split(dataset.data, dataset.target, random_state=42)
 
     # We create a set of voters of different kind.
-    voters = voter.StumpsVotersGenerator(10).generate(X_train)
-    voters = np.append(voters, voter.KernelVotersGenerator(rbf_kernel, gamma=0.01).generate(X_train))
+    voters = voter.KernelVotersGenerator(rbf_kernel, gamma=0.01).generate(X_train)
     voters = np.append(voters, voter.KernelVotersGenerator(rbf_kernel, gamma=0.1).generate(X_train))
     voters = np.append(voters, voter.KernelVotersGenerator(rbf_kernel, gamma=1).generate(X_train))
     voters = np.append(voters, voter.KernelVotersGenerator(rbf_kernel, gamma=10).generate(X_train))
@@ -134,8 +134,7 @@ def multi_voters_example():
 
     # We train MinCq using these voters, on the training set.
     learner = MinCqLearner(mu, voters_type='manual')
-    learner.voters = voters
-    learner.fit(X_train, y_train)
+    learner.fit(X_train, y_train, voters)
 
     # We predict the train and test labels and print the risk.
     predictions_train = learner.predict(X_train)

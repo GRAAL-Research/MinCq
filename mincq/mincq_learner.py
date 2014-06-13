@@ -13,9 +13,9 @@ import logging
 import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.metrics.pairwise import rbf_kernel, linear_kernel, polynomial_kernel
-from qp import QP
-from majority_vote import MajorityVote
-from voter import StumpsVotersGenerator, KernelVotersGenerator
+from .qp import QP
+from .majority_vote import MajorityVote
+from .voter import StumpsVotersGenerator, KernelVotersGenerator
 
 
 

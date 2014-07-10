@@ -134,7 +134,7 @@ class StumpsVotersGenerator(VotersGenerator):
                 maxi = x[i]
         return mini, maxi
 
-    def generate(self, X, y=None, self_complemented=False):
+    def generate(self, X, y=None, self_complemented=False, only_complements=False):
         voters = []
         if len(X) != 0:
             for i in range(len(X[0])):
@@ -145,9 +145,11 @@ class StumpsVotersGenerator(VotersGenerator):
                     # If inter is zero, the attribute is useless as it has a constant value. We do not add stumps for
                     # this attribute.
                     for x in range(self._n_stumps_per_attribute):
-                        voters.append(DecisionStumpVoter(i, t[0] + inter * (x + 1), 1))
 
-                        if self_complemented:
+                        if not only_complements:
+                            voters.append(DecisionStumpVoter(i, t[0] + inter * (x + 1), 1))
+
+                        if self_complemented or only_complements:
                             voters.append(DecisionStumpVoter(i, t[0] + inter * (x + 1), -1))
 
         return np.array(voters)
@@ -170,16 +172,17 @@ class KernelVotersGenerator(VotersGenerator):
         self._kernel_function = kernel_function
         self._kernel_kwargs = kwargs
 
-    def generate(self, X, y=None, self_complemented=False):
+    def generate(self, X, y=None, self_complemented=False, only_complements=False):
         if y is None:
             y = np.array([1] * len(X))
 
         voters = []
-        for point, label in zip(X, y):
-            voters.append(BinaryKernelVoter(point, label, self._kernel_function, **self._kernel_kwargs))
 
-        if self_complemented:
-            for point, label in zip(X, y):
+        for point, label in zip(X, y):
+            if not only_complements:
+                voters.append(BinaryKernelVoter(point, label, self._kernel_function, **self._kernel_kwargs))
+
+            if self_complemented or only_complements:
                 voters.append(BinaryKernelVoter(point, -1 * label, self._kernel_function, **self._kernel_kwargs))
 
         return np.array(voters)

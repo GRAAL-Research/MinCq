@@ -56,7 +56,6 @@ class MajorityVote(object):
         classification_matrix = self.classification_matrix(X)
         return np.squeeze(np.asarray(np.dot(self.weights, classification_matrix)))
 
-
     def classification_matrix(self, X):
         """ Returns the classification matrix of the majority vote.
 
@@ -88,3 +87,22 @@ class MajorityVote(object):
     @voters.setter
     def voters(self, voters):
         self._voters = np.array(voters)
+
+    def cbound_value(self, X, y):
+        """ Returns the value of the C-bound, evaluated on given examples.
+
+        Parameters
+        ----------
+        X : ndarray, shape=(n_samples, n_feature)
+            Input data
+        y : ndarray, shape=(n_samples, )
+            Input labels, where each label is either -1 or 1.
+        """
+        assert np.all(np.in1d(y, [-1, 1])), 'cbound_value: labels should be either -1 or 1'
+
+        classification_matrix = self.classification_matrix(X)
+        first_moment = float(1.0/len(y) * classification_matrix.T.dot(self.weights).dot(y))
+        second_moment = float(1.0/len(y) * \
+            self.weights.T.dot(classification_matrix.dot(classification_matrix.T)).dot(self.weights))
+
+        return 1 - (first_moment ** 2 / second_moment)

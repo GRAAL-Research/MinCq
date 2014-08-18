@@ -187,32 +187,24 @@ class MinCqLearner(BaseEstimator, ClassifierMixin):
         X : ndarray, shape=(n_samples, n_features)
             Training data
 
-        y : ndarray, shape=(n_samples,), optional
+        y : ndarray, shape=(n_samples,)
             Training labels
         """
 
         self.qp = QP()
 
         n_features = len(self.majority_vote.voters)
+        n_examples = len(X)
         classification_matrix = self.majority_vote.classification_matrix(X)
 
-        # Objective function
-        c_matrix = np.zeros((n_features, n_features))
-        for i in range(n_features):
-            for j in range(n_features):
-                c_matrix[i][j] = np.mean(np.multiply(classification_matrix[i], classification_matrix[j]))
-        self.qp.quadratic_func = 2 * np.matrix(c_matrix)
+        # Objective function.
+        self.qp.quadratic_func = 2.0 / n_examples * classification_matrix.T.dot(classification_matrix)
         self.qp.linear_func = np.matrix(np.matrix(-1.0 * np.mean(self.qp.quadratic_func / 2.0, axis=1))).T
 
         # First moment of the margin fixed to mu.
-        c_matrix = np.zeros((self.qp.n_variables,))
-        for i in range(self.qp.n_variables):
-            c_matrix[i] = np.mean(np.multiply(np.asarray(classification_matrix)[i], y))
-
-        column_means = np.mean(np.multiply(y, classification_matrix), axis=1)
-        self.qp.add_equality_constraints(c_matrix, 0.5 * (self.mu + np.mean(column_means)))
+        a_matrix = 2.0 / n_examples * y.T.dot(classification_matrix)
+        self.qp.add_equality_constraints(a_matrix, self.mu + 1.0/2 * np.mean(a_matrix))
 
         # Lower and upper bounds on the variables
         self.qp.add_lower_bound(0.0)
         self.qp.add_upper_bound(1.0 / n_features)
-

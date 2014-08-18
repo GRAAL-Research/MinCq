@@ -54,7 +54,7 @@ class MajorityVote(object):
             The margin of the majority vote for each sample.
         """
         classification_matrix = self.classification_matrix(X)
-        return np.squeeze(np.asarray(np.dot(self.weights, classification_matrix)))
+        return np.squeeze(np.asarray(np.dot(classification_matrix, self.weights)))
 
     def classification_matrix(self, X):
         """ Returns the classification matrix of the majority vote.
@@ -66,11 +66,11 @@ class MajorityVote(object):
 
         Returns
         -------
-        classification_matrix : ndrray, shape=(n_voters, n_samples)
+        classification_matrix : ndrray, shape=(n_samples, n_voters)
             A matrix that contains the value output by each voter, for each sample.
 
         """
-        return np.matrix([v.vote(X) for v in self._voters])
+        return np.matrix([v.vote(X) for v in self._voters]).T
 
     @property
     def weights(self):

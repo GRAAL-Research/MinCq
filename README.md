@@ -7,7 +7,7 @@ of majority votes, PAC-Bayesian theory for inductive binary classification, and 
 much more experiments and information [2].
 
 This implementation is compatible with [Scikit-Learn](http://scikit-learn.org), and comes with usage examples, one of
-which is based on [this Scikit-Learn example](http://scikit-learn.org/stable/auto_examples/plot_classifier_comparison.html)
+which is based on [this Scikit-Learn example](https://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html#sphx-glr-auto-examples-classification-plot-classifier-comparison-py)
 
 
 ## Dependencies
